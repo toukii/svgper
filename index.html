@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<style type="text/css">
+.my-svg-path{
+    stroke-dasharray: 252.2px, 252.2px;
+    stroke-dashoffset: -252.2px;
+    transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease 0s;
+    transform: rotateZ(90deg);
+    transform-origin: 50% 50%;
+}
+</style>
+
+<div id="svgper">
+</div>
+
+<script type="text/javascript">
+let svgper = {
+	 init: function() {
+	 	svgperele = document.getElementById("svgper")
+	 	svgperele.innerHTML = `<svg viewBox="0 0 100 100" width="150px" height="150px" >
+        <path
+            d="M 50 50 m -40 0 a 40 40 0 1 0 80 0  a 40 40 0 1 0 -80 0"
+            fill="none"
+            stroke="#e5e9f2"
+            stroke-width="5">
+        ></path>
+        <path id="processor"
+            d="M 50 50 m -40 0 a 40 40 0 1 0 80 0  a 40 40 0 1 0 -80 0"
+            fill="none"
+            stroke="#20a0ff"
+            stroke-linecap="round"
+            class="my-svg-path"
+            transform="rotate(10,50,50)"
+            stroke-width="5">
+        </path>
+        <text id="txt" x="50" y="60" font-size="24" fill="#20a0ff" font-family="Microsoft YaHei" text-anchor="middle">0%</text>
+    </svg>`
+
+        this.processor = document.getElementById("processor");
+        this.txt = document.getElementById("txt");
+        this.totalL = processor.getTotalLength();
+        this.percent(0)
+    },
+
+    percent: function(per) {
+		p = this.totalL * (per-100)/100.0
+		this.processor.style.cssText = 'stroke-dashoffset:'+ p +'px';
+		// this.txt.textContent = per+"%";
+		this.txt.innerHTML = per + "%";
+	},
+
+	demo: function(){
+		per = 0
+		time = setInterval(function () {
+			per  = per + 1
+			if (per<100){
+				console.log("process: ", per);
+				svgper.percent(per)
+			}else{
+				clearInterval(time);
+			}
+		}, 150);
+	},
+}
+
+svgper.init();
+svgper.percent(1)
+svgper.demo();
+</script>
+</body>
+</html>
